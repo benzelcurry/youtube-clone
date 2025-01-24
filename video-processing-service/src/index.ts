@@ -2,10 +2,11 @@ import express from "express";
 import ffmpeg from "fluent-ffmpeg";
 
 const app = express();
+app.use(express.json());
 
 app.post("/process-video", (req, res) => {
   // Get path of the input video file from the request body
-  const inputFilePath = req.body.inputVideoPath;
+  const inputFilePath = req.body.inputFilePath;
   const outputFilePath = req.body.outputFilePath;
 
   if (!inputFilePath || !outputFilePath) {
@@ -13,7 +14,10 @@ app.post("/process-video", (req, res) => {
   }
 
   ffmpeg(inputFilePath)
-    .outputOptions("-vf", "scale=-1:360") // 360p
+    .outputOptions(
+      "-vf",
+      "scale='if(gte(iw/ih,1),floor(360*iw/ih/2)*2,360)':'if(gte(iw/ih,1),360,floor(360*ih/iw/2)*2)'"
+    ) // Adjust width to be divisible by 2
     .on("end", () => {
       res.status(200).send("Video processing finished successfully.");
     })
