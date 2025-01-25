@@ -17,7 +17,7 @@ app.post("/process-video", (req, res) => {
     .outputOptions(
       "-vf",
       "scale='if(gte(iw/ih,1),floor(360*iw/ih/2)*2,360)':'if(gte(iw/ih,1),360,floor(360*ih/iw/2)*2)'"
-    ) // Adjust width to be divisible by 2
+    ) // Adjust width to be divisible by 2 and then convert to 360p
     .on("end", () => {
       res.status(200).send("Video processing finished successfully.");
     })
