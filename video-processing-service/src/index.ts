@@ -8,6 +8,9 @@ import {
   deleteProcessedVideo,
 } from "./storage";
 
+// Create the local directories for videos
+setupDirectories();
+
 const app = express();
 app.use(express.json());
 
