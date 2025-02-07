@@ -13,12 +13,15 @@ interface SignInProps {
 export default function SignIn({ user }: SignInProps) {
   return (
     <Fragment>
-      <button className={styles.signin} onClick={signOut}>
-        Sign Out
-      </button>
-      <button className={styles.signin} onClick={signInWithGoogle}>
-        Sign In
-      </button>
+      {user ? (
+        <button className={styles.signin} onClick={signOut}>
+          Sign Out
+        </button>
+      ) : (
+        <button className={styles.signin} onClick={signInWithGoogle}>
+          Sign In
+        </button>
+      )}
     </Fragment>
   );
 }
